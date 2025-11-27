@@ -20,6 +20,21 @@ function PaymentPage() {
       return total + (item.price * item.quantity);
     }, 0);
   };
+const pageStyle = {
+  width: '100vw',
+  minHeight: '100vh',
+  margin: 0,
+  padding: '20px',
+  backgroundColor: '#f8f9fa'
+};
+
+return (
+  <div style={pageStyle}>
+    {/* Your existing payment content */}
+  </div>
+);
+
+
 
   const handlePlaceOrder = async () => {
     if (!selectedPayment) {

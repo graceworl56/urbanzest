@@ -26,6 +26,23 @@ function Menu() {
     axios.get(`${API_BASE}/carts/1`).then(res => setCart(res.data));
   }, [navigate]);
 
+// Add this at the top of your Menu component
+const pageStyle = {
+  width: '100vw',
+  minHeight: '100vh',
+  margin: 0,
+  padding: 0
+};
+
+// Wrap your return content with:
+return (
+  <div style={pageStyle}>
+    {/* Your existing menu content */}
+  </div>
+);
+
+
+
   const handleImageError = (e) => {
     e.target.src = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80';
     e.target.alt = 'Image not available';

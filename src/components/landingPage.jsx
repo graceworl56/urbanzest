@@ -11,6 +11,22 @@ function LandingPage() {
     position: 'relative'
   };
 
+const pageStyle = {
+  width: '100vw',
+  minHeight: '100vh',
+  margin: 0,
+  padding: 0,
+  overflowX: 'hidden'
+};
+
+return (
+  <div style={pageStyle}>
+    {/* Your existing home content */}
+  </div>
+);
+
+
+
   const overlayStyle = {
     position: 'absolute',
     top: 0,
