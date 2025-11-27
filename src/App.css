@@ -1,0 +1,17 @@
+/* Add any custom styles here if needed */
+body {
+  font-family: Arial, sans-serif;
+}
+
+/* Custom navbar styles */
+.navbar-custom {
+  background-color: #d3d3d3 !important; /* Light ash/gray color - adjust as needed */
+  color: #000 !important; /* Black text */
+}
+.navbar-custom .navbar-brand,
+.navbar-custom .nav-link {
+  color: #000 !important; /* Ensure links are black */
+}
+.navbar-custom .nav-link:hover {
+  color: #333 !important; /* Darker on hover */
+}
