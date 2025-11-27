@@ -5,23 +5,9 @@ export default defineConfig({
   plugins: [react()],
   build: {
     outDir: 'dist',
-    sourcemap: false,
-    rollupOptions: {
-      external: []
-    }
+    sourcemap: false
   },
   server: {
-    port: 3000,
-    host: true
-  },
-  css: {
-    preprocessorOptions: {
-      css: {
-        additionalData: `
-          * { margin: 0; padding: 0; box-sizing: border-box; }
-          html, body, #root { width: 100%; min-height: 100vh; }
-        `
-      }
-    }
+    port: 3000
   }
 })

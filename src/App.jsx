@@ -81,11 +81,11 @@ function App() {
       {loading && <Preloader />}
       
       {/* Main app content - always rendered but might be behind preloader */}
-      <div className="app-container" style={{ display: loading ? 'none' : 'block', minHeight: '100vh' }}>
+      <div style={{ display: loading ? 'none' : 'block' }}>
         <Router>
           {/* Show navigation only when logged in */}
           {isLoggedIn && (
-            <nav className="navbar navbar-expand-lg navbar-light py-2" style={{ backgroundColor: '#2E8B57', width: '100%' }}>
+            <nav className="navbar navbar-expand-lg navbar-light py-2" style={{ backgroundColor: '#2E8B57' }}>
               <div className="container-fluid">
                 <Link className="navbar-brand d-flex align-items-center text-white fw-bold" to="/menu">
                   <img 
@@ -137,81 +137,79 @@ function App() {
             </nav>
           )}
 
-          <main className="main-content" style={{ width: '100%', minHeight: 'calc(100vh - 200px)' }}>
-            <Routes>
-              {/* Public Routes */}
-              <Route path="/" element={<LandingPage />} />
-              <Route 
-                path="/login" 
-                element={
-                  isLoggedIn ? <Navigate to="/menu" replace /> : <Login />
-                } 
-              />
-              
-              {/* Protected Routes */}
-              <Route 
-                path="/menu" 
-                element={
-                  <ProtectedRoute>
-                    <Menu />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/cart" 
-                element={
-                  <ProtectedRoute>
-                    <Cart />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/profile" 
-                element={
-                  <ProtectedRoute>
-                    <Profile />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/orders" 
-                element={
-                  <ProtectedRoute>
-                    <Orders />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/payment" 
-                element={
-                  <ProtectedRoute>
-                    <PaymentPage />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/track-order" 
-                element={
-                  <ProtectedRoute>
-                    <TrackOrder />
-                  </ProtectedRoute>
-                } 
-              />
-              
-              {/* Catch all route */}
-              <Route 
-                path="*" 
-                element={
-                  isLoggedIn ? <Navigate to="/menu" replace /> : <Navigate to="/" replace />
-                } 
-              />
-            </Routes>
-          </main>
+          <Routes>
+            {/* Public Routes */}
+            <Route path="/" element={<LandingPage />} />
+            <Route 
+              path="/login" 
+              element={
+                isLoggedIn ? <Navigate to="/menu" replace /> : <Login />
+              } 
+            />
+            
+            {/* Protected Routes */}
+            <Route 
+              path="/menu" 
+              element={
+                <ProtectedRoute>
+                  <Menu />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/cart" 
+              element={
+                <ProtectedRoute>
+                  <Cart />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/profile" 
+              element={
+                <ProtectedRoute>
+                  <Profile />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/orders" 
+              element={
+                <ProtectedRoute>
+                  <Orders />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/payment" 
+              element={
+                <ProtectedRoute>
+                  <PaymentPage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/track-order" 
+              element={
+                <ProtectedRoute>
+                  <TrackOrder />
+                </ProtectedRoute>
+              } 
+            />
+            
+            {/* Catch all route */}
+            <Route 
+              path="*" 
+              element={
+                isLoggedIn ? <Navigate to="/menu" replace /> : <Navigate to="/" replace />
+              } 
+            />
+          </Routes>
 
           {/* Footer - Show only when logged in */}
           {isLoggedIn && (
-            <footer className="bg-dark text-white py-4" style={{ width: '100%' }}>
-              <div className="container-fluid">
+            <footer className="bg-dark text-white py-4">
+              <div className="container">
                 <div className="row">
                   <div className="col-md-4">
                     <h5>Urbanzest Restaurant</h5>
