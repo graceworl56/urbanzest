@@ -1,9 +1,8 @@
-// App.js
 import React, { useState, useEffect } from 'react';
-import { HashRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
-import ErrorBoundary from './errorBoundary';
+import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
+import ErrorBoundary from './ErrorBoundary';
 import Preloader from './components/Preloader';
-import LandingPage from './components/landingPage';
+import LandingPage from './components/LandingPage';
 import Login from './components/Login';
 import Menu from './components/Menu';
 import Cart from './components/Cart';
@@ -25,31 +24,19 @@ function App() {
     
     setIsLoggedIn(loggedIn);
     if (storedUserData) {
-      setUserData(JSON.parse(storedUserData));
+      try {
+        setUserData(JSON.parse(storedUserData));
+      } catch (error) {
+        console.error('Error parsing userData:', error);
+      }
     }
 
-    // Listen for storage changes
-    const handleStorageChange = () => {
-      const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
-      const storedUserData = localStorage.getItem('userData');
-      
-      setIsLoggedIn(loggedIn);
-      if (storedUserData) {
-        setUserData(JSON.parse(storedUserData));
-      } else {
-        setUserData(null);
-      }
-    };
-
-    window.addEventListener('storage', handleStorageChange);
-    
     // Shorter loading time - just for visual effect, not blocking functionality
     const timer = setTimeout(() => {
       setLoading(false);
     }, 1500); // Reduced to 1.5 seconds
 
     return () => {
-      window.removeEventListener('storage', handleStorageChange);
       clearTimeout(timer);
     };
   }, []);
@@ -57,6 +44,8 @@ function App() {
   const handleLogin = (userData) => {
     setIsLoggedIn(true);
     setUserData(userData);
+    localStorage.setItem('isLoggedIn', 'true');
+    localStorage.setItem('userData', JSON.stringify(userData));
   };
 
   const handleLogout = () => {
@@ -112,6 +101,9 @@ function App() {
 
                 <div className="collapse navbar-collapse" id="navbarNav">
                   <div className="navbar-nav ms-auto align-items-center">
+
+
+                    
                     <Link className="nav-link text-white mx-2" to="/menu">
                       <i className="fas fa-utensils me-1"></i>Menu
                     </Link>
@@ -143,7 +135,7 @@ function App() {
             <Route 
               path="/login" 
               element={
-                isLoggedIn ? <Navigate to="/menu" replace /> : <Login />
+                isLoggedIn ? <Navigate to="/menu" replace /> : <Login onLogin={handleLogin} />
               } 
             />
             
@@ -168,7 +160,7 @@ function App() {
               path="/profile" 
               element={
                 <ProtectedRoute>
-                  <Profile />
+                  <Profile userData={userData} />
                 </ProtectedRoute>
               } 
             />

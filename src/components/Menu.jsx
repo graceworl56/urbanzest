@@ -26,23 +26,6 @@ function Menu() {
     axios.get(`${API_BASE}/carts/1`).then(res => setCart(res.data));
   }, [navigate]);
 
-// Add this at the top of your Menu component
-const pageStyle = {
-  width: '100vw',
-  minHeight: '100vh',
-  margin: 0,
-  padding: 0
-};
-
-// Wrap your return content with:
-return (
-  <div style={pageStyle}>
-    {/* Your existing menu content */}
-  </div>
-);
-
-
-
   const handleImageError = (e) => {
     e.target.src = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80';
     e.target.alt = 'Image not available';
@@ -365,430 +348,440 @@ return (
     return `₹${price}`;
   };
 
+  // Add this at the top of your Menu component
+  const pageStyle = {
+    width: '100vw',
+    minHeight: '100vh',
+    margin: 0,
+    padding: 0
+  };
+
   return (
-    <div
-      style={{
-        backgroundImage: "url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')",
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        minHeight: '100vh',
-        position: 'relative',
-      }}
-    >
-      {/* Dark overlay for better readability */}
+    <div style={pageStyle}>
       <div
         style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: 'rgba(0, 0, 0, 0.7)',
-          zIndex: 1,
+          backgroundImage: "url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          minHeight: '100vh',
+          position: 'relative',
         }}
-      ></div>
-
-      {/* Cart Popup Notification */}
-      {showPopup && (
-        <div 
-          className="position-fixed top-0 start-50 translate-middle-x mt-4"
+      >
+        {/* Dark overlay for better readability */}
+        <div
           style={{
-            zIndex: 9999,
-            animation: 'slideDown 0.3s ease-out'
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+            zIndex: 1,
           }}
-        >
+        ></div>
+
+        {/* Cart Popup Notification */}
+        {showPopup && (
           <div 
-            className="alert alert-success shadow-lg d-flex align-items-center"
+            className="position-fixed top-0 start-50 translate-middle-x mt-4"
             style={{
-              backgroundColor: '#2E8B57',
-              color: 'white',
-              border: 'none',
-              borderRadius: '15px',
-              padding: '15px 25px',
-              minWidth: '300px',
-              boxShadow: '0 10px 30px rgba(46, 139, 87, 0.4)'
+              zIndex: 9999,
+              animation: 'slideDown 0.3s ease-out'
             }}
-            role="alert"
           >
-            <i className="fas fa-check-circle me-3 fs-5"></i>
-            <div className="fw-semibold">{popupMessage}</div>
-            <button 
-              type="button" 
-              className="btn-close btn-close-white ms-3"
-              onClick={() => setShowPopup(false)}
-              aria-label="Close"
-            ></button>
-          </div>
-        </div>
-      )}
-
-      {/* Content */}
-      <div style={{ position: 'relative', zIndex: 2, padding: '20px' }}>
-        <div className="text-center mb-4 text-white">
-          <h1 className="display-4 fw-bold mb-3" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>
-            Our Premium Menu
-          </h1>
-          <p className="lead fs-4" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }}>
-            Discover culinary excellence with our handcrafted dishes
-          </p>
-        </div>
-        
-        {/* Carousel Container */}
-        <div className="carousel-container" style={{ maxWidth: '1400px', margin: '0 auto' }}>
-          {/* Carousel */}
-          <div id="menuCarousel" className="carousel slide" data-bs-ride="carousel">
-            {/* Carousel Indicators */}
-            <div className="carousel-indicators">
-              {displayItems.slice(0, 6).map((_, index) => (
-                <button
-                  key={index}
-                  type="button"
-                  data-bs-target="#menuCarousel"
-                  data-bs-slide-to={index}
-                  className={index === activeIndex ? 'active' : ''}
-                  aria-current={index === activeIndex ? 'true' : 'false'}
-                  aria-label={`Slide ${index + 1}`}
-                  onClick={() => goToSlide(index)}
-                  style={{
-                    width: '15px',
-                    height: '15px',
-                    borderRadius: '50%',
-                    margin: '0 8px',
-                    backgroundColor: index === activeIndex ? '#2E8B57' : '#fff',
-                    border: '2px solid #2E8B57'
-                  }}
-                ></button>
-              ))}
+            <div 
+              className="alert alert-success shadow-lg d-flex align-items-center"
+              style={{
+                backgroundColor: '#2E8B57',
+                color: 'white',
+                border: 'none',
+                borderRadius: '15px',
+                padding: '15px 25px',
+                minWidth: '300px',
+                boxShadow: '0 10px 30px rgba(46, 139, 87, 0.4)'
+              }}
+              role="alert"
+            >
+              <i className="fas fa-check-circle me-3 fs-5"></i>
+              <div className="fw-semibold">{popupMessage}</div>
+              <button 
+                type="button" 
+                className="btn-close btn-close-white ms-3"
+                onClick={() => setShowPopup(false)}
+                aria-label="Close"
+              ></button>
             </div>
+          </div>
+        )}
 
-            {/* Carousel Items */}
-            <div className="carousel-inner">
-              {displayItems.slice(0, 6).map((item, index) => (
-                <div 
-                  key={item.id} 
-                  className={`carousel-item ${index === activeIndex ? 'active' : ''}`}
-                >
-                  <div className="row justify-content-center">
-                    <div className="col-lg-10">
-                      <div className="card shadow-lg" style={{ 
-                        border: 'none', 
-                        borderRadius: '25px', 
-                        overflow: 'hidden',
-                        background: 'rgba(255, 255, 255, 0.95)',
-                        transition: 'transform 0.3s ease',
-                        backdropFilter: 'blur(10px)'
-                      }}>
-                        <div className="row g-0">
-                          {/* Image Section */}
-                          <div className="col-md-6">
-                            <img 
-                              src={item.image} 
-                              alt={item.name}
-                              className="img-fluid h-100"
-                              style={{ 
-                                objectFit: 'cover',
-                                minHeight: '400px',
-                                width: '100%'
-                              }}
-                              loading="eager"
-                              onError={handleImageError}
-                            />
-                          </div>
-                          
-                          {/* Content Section */}
-                          <div className="col-md-6 d-flex align-items-center">
-                            <div className="card-body p-4 text-dark">
-                              <div className="mb-3">
-                                <span className="badge bg-success fs-6 px-3 py-2 mb-2">⭐ Chef's Special</span>
-                                <h3 className="card-title mb-3 fw-bold" style={{ color: '#2c5530', fontSize: '1.8rem' }}>
-                                  {item.name}
-                                </h3>
-                              </div>
-                              <p className="card-text mb-4" style={{ lineHeight: '1.6', color: '#495057' }}>
-                                {item.description}
-                              </p>
-                              <div className="d-flex justify-content-between align-items-center mb-4">
-                                <span className="h2 mb-0 fw-bold" style={{ color: '#2E8B57' }}>
-                                  {formatPrice(item.price)}
-                                </span>
-                                <div>
-                                  <span className="badge bg-warning text-dark px-3 py-2 me-2">🔥 Bestseller</span>
-                                </div>
-                              </div>
-                              <button 
-                                className="btn btn-lg w-100 shadow" 
-                                onClick={() => addToCart(item.id, 1, item.name, item.price)}
+        {/* Content */}
+        <div style={{ position: 'relative', zIndex: 2, padding: '20px' }}>
+          <div className="text-center mb-4 text-white">
+            <h1 className="display-4 fw-bold mb-3" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>
+              Our Premium Menu
+            </h1>
+            <p className="lead fs-4" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }}>
+              Discover culinary excellence with our handcrafted dishes
+            </p>
+          </div>
+          
+          {/* Carousel Container */}
+          <div className="carousel-container" style={{ maxWidth: '1400px', margin: '0 auto' }}>
+            {/* Carousel */}
+            <div id="menuCarousel" className="carousel slide" data-bs-ride="carousel">
+              {/* Carousel Indicators */}
+              <div className="carousel-indicators">
+                {displayItems.slice(0, 6).map((_, index) => (
+                  <button
+                    key={index}
+                    type="button"
+                    data-bs-target="#menuCarousel"
+                    data-bs-slide-to={index}
+                    className={index === activeIndex ? 'active' : ''}
+                    aria-current={index === activeIndex ? 'true' : 'false'}
+                    aria-label={`Slide ${index + 1}`}
+                    onClick={() => goToSlide(index)}
+                    style={{
+                      width: '15px',
+                      height: '15px',
+                      borderRadius: '50%',
+                      margin: '0 8px',
+                      backgroundColor: index === activeIndex ? '#2E8B57' : '#fff',
+                      border: '2px solid #2E8B57'
+                    }}
+                  ></button>
+                ))}
+              </div>
+
+              {/* Carousel Items */}
+              <div className="carousel-inner">
+                {displayItems.slice(0, 6).map((item, index) => (
+                  <div 
+                    key={item.id} 
+                    className={`carousel-item ${index === activeIndex ? 'active' : ''}`}
+                  >
+                    <div className="row justify-content-center">
+                      <div className="col-lg-10">
+                        <div className="card shadow-lg" style={{ 
+                          border: 'none', 
+                          borderRadius: '25px', 
+                          overflow: 'hidden',
+                          background: 'rgba(255, 255, 255, 0.95)',
+                          transition: 'transform 0.3s ease',
+                          backdropFilter: 'blur(10px)'
+                        }}>
+                          <div className="row g-0">
+                            {/* Image Section */}
+                            <div className="col-md-6">
+                              <img 
+                                src={item.image} 
+                                alt={item.name}
+                                className="img-fluid h-100"
                                 style={{ 
-                                  backgroundColor: '#2E8B57',
-                                  border: 'none',
-                                  borderRadius: '50px',
-                                  color: 'white',
-                                  fontSize: '1.1rem',
-                                  padding: '15px 30px',
-                                  fontWeight: '600',
-                                  transition: 'all 0.3s ease'
+                                  objectFit: 'cover',
+                                  minHeight: '400px',
+                                  width: '100%'
                                 }}
-                                onMouseEnter={(e) => {
-                                  e.target.style.transform = 'translateY(-2px)';
-                                  e.target.style.boxShadow = '0 8px 20px rgba(46, 139, 87, 0.4)';
-                                }}
-                                onMouseLeave={(e) => {
-                                  e.target.style.transform = 'translateY(0)';
-                                  e.target.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.2)';
-                                }}
-                              >
-                                🛒 Add to Cart
-                              </button>
+                                loading="eager"
+                                onError={handleImageError}
+                              />
+                            </div>
+                            
+                            {/* Content Section */}
+                            <div className="col-md-6 d-flex align-items-center">
+                              <div className="card-body p-4 text-dark">
+                                <div className="mb-3">
+                                  <span className="badge bg-success fs-6 px-3 py-2 mb-2">⭐ Chef's Special</span>
+                                  <h3 className="card-title mb-3 fw-bold" style={{ color: '#2c5530', fontSize: '1.8rem' }}>
+                                    {item.name}
+                                  </h3>
+                                </div>
+                                <p className="card-text mb-4" style={{ lineHeight: '1.6', color: '#495057' }}>
+                                  {item.description}
+                                </p>
+                                <div className="d-flex justify-content-between align-items-center mb-4">
+                                  <span className="h2 mb-0 fw-bold" style={{ color: '#2E8B57' }}>
+                                    {formatPrice(item.price)}
+                                  </span>
+                                  <div>
+                                    <span className="badge bg-warning text-dark px-3 py-2 me-2">🔥 Bestseller</span>
+                                  </div>
+                                </div>
+                                <button 
+                                  className="btn btn-lg w-100 shadow" 
+                                  onClick={() => addToCart(item.id, 1, item.name, item.price)}
+                                  style={{ 
+                                    backgroundColor: '#2E8B57',
+                                    border: 'none',
+                                    borderRadius: '50px',
+                                    color: 'white',
+                                    fontSize: '1.1rem',
+                                    padding: '15px 30px',
+                                    fontWeight: '600',
+                                    transition: 'all 0.3s ease'
+                                  }}
+                                  onMouseEnter={(e) => {
+                                    e.target.style.transform = 'translateY(-2px)';
+                                    e.target.style.boxShadow = '0 8px 20px rgba(46, 139, 87, 0.4)';
+                                  }}
+                                  onMouseLeave={(e) => {
+                                    e.target.style.transform = 'translateY(0)';
+                                    e.target.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.2)';
+                                  }}
+                                >
+                                  🛒 Add to Cart
+                                </button>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Carousel Controls */}
-            <button 
-              className="carousel-control-prev" 
-              type="button" 
-              onClick={prevSlide}
-              style={{ width: '5%' }}
-            >
-              <span 
-                className="carousel-control-prev-icon" 
-                aria-hidden="true"
-                style={{ 
-                  backgroundColor: '#2E8B57',
-                  borderRadius: '50%',
-                  padding: '20px',
-                  backgroundSize: '20px 20px'
-                }}
-              ></span>
-              <span className="visually-hidden">Previous</span>
-            </button>
-            <button 
-              className="carousel-control-next" 
-              type="button" 
-              onClick={nextSlide}
-              style={{ width: '5%' }}
-            >
-              <span 
-                className="carousel-control-next-icon" 
-                aria-hidden="true"
-                style={{ 
-                  backgroundColor: '#2E8B57',
-                  borderRadius: '50%',
-                  padding: '20px',
-                  backgroundSize: '20px 20px'
-                }}
-              ></span>
-              <span className="visually-hidden">Next</span>
-            </button>
-          </div>
-
-          {/* Full Gourmet Collection - 32 Items with Pagination */}
-          <div className="mt-4 pt-3">
-            {/* Centered Heading */}
-            <div className="text-center mb-4">
-              <h3 className="text-white display-5 fw-bold mb-3" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>
-                Full Gourmet Collection
-              </h3>
-              <div className="text-white">
-                <span className="fs-5">Page {currentPage} of {totalPages}</span>
+                ))}
               </div>
+
+              {/* Carousel Controls */}
+              <button 
+                className="carousel-control-prev" 
+                type="button" 
+                onClick={prevSlide}
+                style={{ width: '5%' }}
+              >
+                <span 
+                  className="carousel-control-prev-icon" 
+                  aria-hidden="true"
+                  style={{ 
+                    backgroundColor: '#2E8B57',
+                    borderRadius: '50%',
+                    padding: '20px',
+                    backgroundSize: '20px 20px'
+                  }}
+                ></span>
+                <span className="visually-hidden">Previous</span>
+              </button>
+              <button 
+                className="carousel-control-next" 
+                type="button" 
+                onClick={nextSlide}
+                style={{ width: '5%' }}
+              >
+                <span 
+                  className="carousel-control-next-icon" 
+                  aria-hidden="true"
+                  style={{ 
+                    backgroundColor: '#2E8B57',
+                    borderRadius: '50%',
+                    padding: '20px',
+                    backgroundSize: '20px 20px'
+                  }}
+                ></span>
+                <span className="visually-hidden">Next</span>
+              </button>
             </div>
-            
-            {/* Menu Items Grid - 8 items per page */}
-            <div className="row justify-content-center">
-              {currentItems.map(item => (
-                <div key={item.id} className="col-xl-3 col-lg-4 col-md-6 mb-4">
-                  <div className="card h-100 shadow" style={{ 
-                    border: 'none', 
-                    borderRadius: '15px', 
-                    overflow: 'hidden',
-                    background: 'rgba(255, 255, 255, 0.95)',
-                    transition: 'all 0.3s ease',
-                    maxWidth: '280px',
-                    margin: '0 auto'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-5px)';
-                    e.currentTarget.style.boxShadow = '0 15px 30px rgba(0, 0, 0, 0.3)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.1)';
-                  }}
-                  >
-                    <img 
-                      src={item.image} 
-                      alt={item.name}
-                      className="card-img-top"
-                      style={{ 
-                        height: '180px', 
-                        objectFit: 'cover'
-                      }}
-                      loading="lazy"
-                      onError={handleImageError}
-                    />
-                    <div className="card-body d-flex flex-column p-3">
-                      <h5 className="card-title text-dark fw-bold mb-2" style={{ fontSize: '1.1rem' }}>{item.name}</h5>
-                      <p className="card-text text-muted flex-grow-1 mb-3" style={{ fontSize: '0.85rem', lineHeight: '1.4' }}>
-                        {item.description}
-                      </p>
-                      <div className="d-flex justify-content-between align-items-center mt-auto">
-                        <span className="h5 mb-0 fw-bold" style={{ color: '#2E8B57', fontSize: '1.2rem' }}>
-                          {formatPrice(item.price)}
-                        </span>
-                        <button 
-                          className="btn" 
-                          onClick={() => addToCart(item.id, 1, item.name, item.price)} 
-                          
-                          style={{ 
-                            backgroundColor: '#2E8B57',
-                            border: 'none',
-                            borderRadius: '15px',
-                            color: 'white',
-                            padding: '6px 16px',
-                            fontWeight: '600',
-                            fontSize: '0.85rem'
-                          }}
-                        >
-                          Add to Cart
-                        </button>
-                      </div>
-                    </div>
-                  </div>
+
+            {/* Full Gourmet Collection - 32 Items with Pagination */}
+            <div className="mt-4 pt-3">
+              {/* Centered Heading */}
+              <div className="text-center mb-4">
+                <h3 className="text-white display-5 fw-bold mb-3" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>
+                  Full Gourmet Collection
+                </h3>
+                <div className="text-white">
+                  <span className="fs-5">Page {currentPage} of {totalPages}</span>
                 </div>
-              ))}
-            </div>
-
-            {/* Pagination Controls */}
-            {totalPages > 1 && (
-              <div className="d-flex justify-content-center mt-4">
-                <nav aria-label="Menu pagination">
-                  <ul className="pagination">
-                    <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
-                      <button 
-                        className="page-link" 
-                        onClick={() => handlePageChange(currentPage - 1)}
-                        style={{ 
-                          backgroundColor: '#2E8B57', 
-                          borderColor: '#2E8B57',
-                          color: 'white',
-                          margin: '0 2px',
-                          borderRadius: '8px',
-                          padding: '8px 16px',
-                          fontWeight: '600'
-                        }}
-                      >
-                        ← Previous
-                      </button>
-                    </li>
-                    
-                    {[...Array(totalPages)].map((_, index) => {
-                      const pageNumber = index + 1;
-                      return (
-                        <li key={pageNumber} className={`page-item ${currentPage === pageNumber ? 'active' : ''}`}>
-                          <button 
-                            className="page-link" 
-                            onClick={() => handlePageChange(pageNumber)}
-                            style={{ 
-                              backgroundColor: currentPage === pageNumber ? '#2E8B57' : 'rgba(255, 255, 255, 0.9)',
-                              borderColor: '#2E8B57',
-                              color: currentPage === pageNumber ? 'white' : '#2E8B57',
-                              margin: '0 2px',
-                              borderRadius: '8px',
-                              padding: '8px 12px',
-                              fontWeight: currentPage === pageNumber ? 'bold' : 'normal'
-                            }}
-                          >
-                            {pageNumber}
-                          </button>
-                        </li>
-                      );
-                    })}
-                    
-                    <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
-                      <button 
-                        className="page-link" 
-                        onClick={() => handlePageChange(currentPage + 1)}
-                        style={{ 
-                          backgroundColor: '#2E8B57', 
-                          borderColor: '#2E8B57',
-                          color: 'white',
-                          margin: '0 2px',
-                          borderRadius: '8px',
-                          padding: '8px 16px',
-                          fontWeight: '600'
-                        }}
-                      >
-                        Next →
-                      </button>
-                    </li>
-                  </ul>
-                </nav>
               </div>
-            )}
-          </div>
-
-          {/* Testimonials Section - Reduced gap */}
-          <div className="mt-4 pt-3">
-            <h3 className="text-center mb-4 text-white display-5 fw-bold" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>
-              What Our Customers Say
-            </h3>
-            <div className="row justify-content-center">
-              {testimonials.map(testimonial => (
-                <div key={testimonial.id} className="col-lg-4 col-md-6 mb-4">
-                  <div className="card h-100 shadow" style={{ 
-                    border: 'none', 
-                    borderRadius: '15px',
-                    background: 'rgba(255, 255, 255, 0.95)',
-                    backdropFilter: 'blur(10px)',
-                    maxWidth: '320px',
-                    margin: '0 auto'
-                  }}>
-                    <div className="card-body text-center p-4">
+              
+              {/* Menu Items Grid - 8 items per page */}
+              <div className="row justify-content-center">
+                {currentItems.map(item => (
+                  <div key={item.id} className="col-xl-3 col-lg-4 col-md-6 mb-4">
+                    <div className="card h-100 shadow" style={{ 
+                      border: 'none', 
+                      borderRadius: '15px', 
+                      overflow: 'hidden',
+                      background: 'rgba(255, 255, 255, 0.95)',
+                      transition: 'all 0.3s ease',
+                      maxWidth: '280px',
+                      margin: '0 auto'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-5px)';
+                      e.currentTarget.style.boxShadow = '0 15px 30px rgba(0, 0, 0, 0.3)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.1)';
+                    }}
+                    >
                       <img 
-                        src={testimonial.image} 
-                        alt={testimonial.name}
-                        className="rounded-circle mb-3"
-                        style={{ width: '70px', height: '70px', objectFit: 'cover' }}
+                        src={item.image} 
+                        alt={item.name}
+                        className="card-img-top"
+                        style={{ 
+                          height: '180px', 
+                          objectFit: 'cover'
+                        }}
+                        loading="lazy"
                         onError={handleImageError}
                       />
-                      <div className="mb-3">
-                        {[...Array(testimonial.rating)].map((_, i) => (
-                          <span key={i} className="text-warning fs-5">⭐</span>
-                        ))}
+                      <div className="card-body d-flex flex-column p-3">
+                        <h5 className="card-title text-dark fw-bold mb-2" style={{ fontSize: '1.1rem' }}>{item.name}</h5>
+                        <p className="card-text text-muted flex-grow-1 mb-3" style={{ fontSize: '0.85rem', lineHeight: '1.4' }}>
+                          {item.description}
+                        </p>
+                        <div className="d-flex justify-content-between align-items-center mt-auto">
+                          <span className="h5 mb-0 fw-bold" style={{ color: '#2E8B57', fontSize: '1.2rem' }}>
+                            {formatPrice(item.price)}
+                          </span>
+                          <button 
+                            className="btn" 
+                            onClick={() => addToCart(item.id, 1, item.name, item.price)} 
+                            
+                            style={{ 
+                              backgroundColor: '#2E8B57',
+                              border: 'none',
+                              borderRadius: '15px',
+                              color: 'white',
+                              padding: '6px 16px',
+                              fontWeight: '600',
+                              fontSize: '0.85rem'
+                            }}
+                          >
+                            Add to Cart
+                          </button>
+                        </div>
                       </div>
-                      <p className="card-text text-muted mb-3 fst-italic" style={{ fontSize: '0.9rem' }}>
-                        "{testimonial.comment}"
-                      </p>
-                      <h6 className="card-title fw-bold text-dark mb-0">{testimonial.name}</h6>
                     </div>
                   </div>
+                ))}
+              </div>
+
+              {/* Pagination Controls */}
+              {totalPages > 1 && (
+                <div className="d-flex justify-content-center mt-4">
+                  <nav aria-label="Menu pagination">
+                    <ul className="pagination">
+                      <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                        <button 
+                          className="page-link" 
+                          onClick={() => handlePageChange(currentPage - 1)}
+                          style={{ 
+                            backgroundColor: '#2E8B57', 
+                            borderColor: '#2E8B57',
+                            color: 'white',
+                            margin: '0 2px',
+                            borderRadius: '8px',
+                            padding: '8px 16px',
+                            fontWeight: '600'
+                          }}
+                        >
+                          ← Previous
+                        </button>
+                      </li>
+                      
+                      {[...Array(totalPages)].map((_, index) => {
+                        const pageNumber = index + 1;
+                        return (
+                          <li key={pageNumber} className={`page-item ${currentPage === pageNumber ? 'active' : ''}`}>
+                            <button 
+                              className="page-link" 
+                              onClick={() => handlePageChange(pageNumber)}
+                              style={{ 
+                                backgroundColor: currentPage === pageNumber ? '#2E8B57' : 'rgba(255, 255, 255, 0.9)',
+                                borderColor: '#2E8B57',
+                                color: currentPage === pageNumber ? 'white' : '#2E8B57',
+                                margin: '0 2px',
+                                borderRadius: '8px',
+                                padding: '8px 12px',
+                                fontWeight: currentPage === pageNumber ? 'bold' : 'normal'
+                              }}
+                            >
+                              {pageNumber}
+                            </button>
+                          </li>
+                        );
+                      })}
+                      
+                      <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+                        <button 
+                          className="page-link" 
+                          onClick={() => handlePageChange(currentPage + 1)}
+                          style={{ 
+                            backgroundColor: '#2E8B57', 
+                            borderColor: '#2E8B57',
+                            color: 'white',
+                            margin: '0 2px',
+                            borderRadius: '8px',
+                            padding: '8px 16px',
+                            fontWeight: '600'
+                          }}
+                        >
+                          Next →
+                        </button>
+                      </li>
+                    </ul>
+                  </nav>
                 </div>
-              ))}
+              )}
+            </div>
+
+            {/* Testimonials Section - Reduced gap */}
+            <div className="mt-4 pt-3">
+              <h3 className="text-center mb-4 text-white display-5 fw-bold" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>
+                What Our Customers Say
+              </h3>
+              <div className="row justify-content-center">
+                {testimonials.map(testimonial => (
+                  <div key={testimonial.id} className="col-lg-4 col-md-6 mb-4">
+                    <div className="card h-100 shadow" style={{ 
+                      border: 'none', 
+                      borderRadius: '15px',
+                      background: 'rgba(255, 255, 255, 0.95)',
+                      backdropFilter: 'blur(10px)',
+                      maxWidth: '320px',
+                      margin: '0 auto'
+                    }}>
+                      <div className="card-body text-center p-4">
+                        <img 
+                          src={testimonial.image} 
+                          alt={testimonial.name}
+                          className="rounded-circle mb-3"
+                          style={{ width: '70px', height: '70px', objectFit: 'cover' }}
+                          onError={handleImageError}
+                        />
+                        <div className="mb-3">
+                          {[...Array(testimonial.rating)].map((_, i) => (
+                            <span key={i} className="text-warning fs-5">⭐</span>
+                          ))}
+                        </div>
+                        <p className="card-text text-muted mb-3 fst-italic" style={{ fontSize: '0.9rem' }}>
+                          "{testimonial.comment}"
+                        </p>
+                        <h6 className="card-title fw-bold text-dark mb-0">{testimonial.name}</h6>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Add CSS animation for the popup */}
-      <style jsx>{`
-        @keyframes slideDown {
-          from {
-            transform: translate(-50%, -100%);
-            opacity: 0;
+        {/* Add CSS animation for the popup */}
+        <style jsx>{`
+          @keyframes slideDown {
+            from {
+              transform: translate(-50%, -100%);
+              opacity: 0;
+            }
+            to {
+              transform: translate(-50%, 0);
+              opacity: 1;
+            }
           }
-          to {
-            transform: translate(-50%, 0);
-            opacity: 1;
-          }
-        }
-      `}</style>
+        `}</style>
+      </div>
     </div>
   );
 }

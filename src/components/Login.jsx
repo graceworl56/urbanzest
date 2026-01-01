@@ -1,4 +1,4 @@
-// components/Login.js
+// components/Login.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -55,8 +55,13 @@ function Login() {
     setLoading(true);
 
     try {
+      console.log('🔍 Attempting login with:', formData.email);
+      console.log('📡 Making request to:', `${API_BASE}/users?email=${formData.email}`);
+      
       // Check if user exists in the database
       const response = await axios.get(`${API_BASE}/users?email=${formData.email}`);
+      console.log('📦 Login response:', response);
+      
       const users = response.data;
 
       if (users.length === 0) {
@@ -66,6 +71,7 @@ function Login() {
       }
 
       const user = users[0];
+      console.log('👤 Found user:', user);
 
       // In a real app, you would verify the password with backend
       // For demo purposes, we'll accept any password
@@ -90,8 +96,17 @@ function Login() {
         setError('Please enter your password');
       }
     } catch (error) {
-      console.error('Login error:', error);
-      setError('Login failed. Please try again.');
+      console.error('❌ Login error:', error);
+      console.error('Error details:', error.response?.data || error.message);
+      
+      // More specific error messages
+      if (error.code === 'ERR_NETWORK') {
+        setError('Cannot connect to server. Make sure JSON Server is running on port 3001.');
+      } else if (error.response?.status === 404) {
+        setError('Server endpoint not found. Check if JSON Server is running.');
+      } else {
+        setError('Login failed. Please try again.');
+      }
     } finally {
       setLoading(false);
     }
@@ -123,8 +138,23 @@ function Login() {
     }
 
     try {
+      console.log('🔍 Attempting signup with email:', signUpData.email);
+      console.log('📡 Testing API connection to:', `${API_BASE}/users`);
+      
+      // First, test if the API is reachable
+      try {
+        const testResponse = await axios.get(`${API_BASE}/users`);
+        console.log('✅ API connection successful:', testResponse.status);
+      } catch (testError) {
+        console.error('❌ API connection failed:', testError.message);
+        throw new Error(`Cannot connect to server: ${testError.message}. Make sure JSON Server is running.`);
+      }
+
       // Check if email already exists
+      console.log('📡 Checking if email exists:', `${API_BASE}/users?email=${signUpData.email}`);
       const existingUsers = await axios.get(`${API_BASE}/users?email=${signUpData.email}`);
+      console.log('📦 Existing users response:', existingUsers.data);
+      
       if (existingUsers.data.length > 0) {
         setError('An account with this email already exists');
         setLoading(false);
@@ -155,8 +185,11 @@ function Login() {
         rating: 4.8
       };
 
+      console.log('📤 Attempting to save user:', userData);
+      
       // Save to JSON server
-      await axios.post(`${API_BASE}/users`, userData);
+      const response = await axios.post(`${API_BASE}/users`, userData);
+      console.log('✅ Save response:', response.status, response.data);
 
       // Store user data in localStorage for immediate access
       localStorage.setItem('userData', JSON.stringify(userData));
@@ -175,8 +208,22 @@ function Login() {
       }, 2000);
 
     } catch (error) {
-      console.error('Error creating account:', error);
-      setError('Failed to create account. Please try again.');
+      console.error('❌ Error creating account:', error);
+      console.error('❌ Error details:', error.response?.data || error.message);
+      console.error('❌ Error code:', error.code);
+      
+      // More specific error messages
+      if (error.message.includes('Cannot connect to server')) {
+        setError(error.message);
+      } else if (error.code === 'ERR_NETWORK') {
+        setError('Cannot connect to server. Please make sure: 1. JSON Server is running 2. It\'s on port 3001 3. No firewall blocking');
+      } else if (error.response?.status === 404) {
+        setError('Server not found. Make sure JSON Server is running with: json-server --watch db.json --port 3001');
+      } else if (error.response?.status === 500) {
+        setError('Server error. Check if db.json exists in your server folder.');
+      } else {
+        setError('Failed to create account. Please try again. Error: ' + (error.message || 'Unknown error'));
+      }
     } finally {
       setLoading(false);
     }
@@ -254,7 +301,11 @@ function Login() {
         {error && (
           <div className="alert alert-danger d-flex align-items-center" role="alert">
             <i className="fas fa-exclamation-circle me-2"></i>
-            <div>{error}</div>
+            <div>
+              <strong></strong> {error}
+              <br />
+              <small className="text-muted"></small>
+            </div>
           </div>
         )}
 
@@ -522,6 +573,15 @@ function Login() {
             </div>
           </form>
         )}
+
+        {/* Debug Info */}
+        <div className="mt-4 pt-3 border-top text-center">
+          {/* <small className="text-muted">
+            API Base URL: {API_BASE}
+            <br />
+            To start JSON Server: <code>json-server --watch db.json --port 3001</code>
+          </small> */}
+        </div>
       </div>
     </div>
   );

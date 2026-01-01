@@ -20,21 +20,14 @@ function PaymentPage() {
       return total + (item.price * item.quantity);
     }, 0);
   };
-const pageStyle = {
-  width: '100vw',
-  minHeight: '100vh',
-  margin: 0,
-  padding: '20px',
-  backgroundColor: '#f8f9fa'
-};
 
-return (
-  <div style={pageStyle}>
-    {/* Your existing payment content */}
-  </div>
-);
-
-
+  const pageStyle = {
+    width: '100vw',
+    minHeight: '100vh',
+    margin: 0,
+    padding: '20px',
+    backgroundColor: '#f8f9fa'
+  };
 
   const handlePlaceOrder = async () => {
     if (!selectedPayment) {
@@ -118,11 +111,7 @@ return (
   }
 
   return (
-    <div style={{ 
-      minHeight: '100vh', 
-      backgroundColor: '#f8f9fa',
-      padding: '20px'
-    }}>
+    <div style={pageStyle}>
       {/* Navigation Bar */}
       <nav className="navbar navbar-expand-lg navbar-dark" style={{ 
         backgroundColor: '#2E8B57',
